@@ -119,4 +119,8 @@ shinyServer(function(input, output) {
       addRasterImage(r, colors = pal, opacity = 0.8) %>% addLegend(pal = pal1, values = raster::values(r))
   })
   
+  output$grafico <- renderPlot({
+    
+    
+  })
 })
