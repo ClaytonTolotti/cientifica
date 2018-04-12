@@ -4,7 +4,7 @@ library(raster)
 library(leaflet)
 library(rgdal)
 
-pathFile <-  "C:\\Users\\clayt\\Downloads\\Teste\\"
+pathFile <-  paste(getwd(),'//',sep='')
 
 loadRData <- function(fileName) {
   load(fileName)

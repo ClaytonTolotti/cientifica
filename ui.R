@@ -2,7 +2,7 @@ library(shiny)
 library(leaflet)
 
 shinyUI(pageWithSidebar(
-  headerPanel('Dados Metereologicos'),
+  headerPanel('Dados Meteorológicos'),
   
   sidebarPanel(
     selectInput(
@@ -12,29 +12,29 @@ shinyUI(pageWithSidebar(
         "Brasil" = "BR",
         "Acre" = "AC",
         "Alagoas" = "AL",
-        "Amapa" = "AP",
+        "Amapá" = "AP",
         "Amazonas" = "AM",
         "Bahia" = "BA",
-        "Ceara" = "CE",
+        "Ceará" = "CE",
         "Distrito Federal" = "DF",
         "Espirito Santo" = "ES",
-        "Goias" = "GO",
-        "Maranhao" = "MA",
+        "Goiás" = "GO",
+        "Maranhão" = "MA",
         "Mato Grosso" = "MT",
         "Mato Grosso do Sul" = "MS",
         "Minas Gerais" = "MG",
-        "Para" = "PA",
-        "Paraiba" = "PB",
-        "Parana" = "PR",
+        "Pará" = "PA",
+        "Paraíba" = "PB",
+        "Paraná" = "PR",
         "Pernambuco" = "PE",
-        "Piaui" = "PI",
+        "Piauí" = "PI",
         "Rio de Janeiro" = "RJ",
         "Rio Grande do Norte" = "RN",
         "Rio Grande do Sul" = "RS",
-        "Rondonia" = "RO",
-        "Roraima" = "RR",
+        "Rondônia" = "RO",
+        "Rorâima" = "RR",
         "Santa Catarina" = "SC",
-        "Sao Paulo" = "SP",
+        "São Paulo" = "SP",
         "Sergipe" = "SE"
       )
     ),
@@ -55,12 +55,11 @@ shinyUI(pageWithSidebar(
   ),
   
   
-  
   mainPanel(tabsetPanel(
-    tabPanel('Graficos',
+    tabPanel('Gráficos',
              dataTableOutput('PREC')),
     tabPanel(
-      'Mapa Metereologicos',
+      'Mapa Meteorológico',
       leafletOutput('mapa', width = "100%", height = "450")
     )
   ))
