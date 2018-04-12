@@ -2,7 +2,7 @@ library(shiny)
 library(leaflet)
 
 shinyUI(pageWithSidebar(
-  headerPanel('Dados Meteorológicos'),
+  headerPanel('Dados Meteorologicos'),
   
   sidebarPanel(
     selectInput(
@@ -12,35 +12,52 @@ shinyUI(pageWithSidebar(
         "Brasil" = "BR",
         "Acre" = "AC",
         "Alagoas" = "AL",
-        "Amapá" = "AP",
+        "Amapa" = "AP",
         "Amazonas" = "AM",
         "Bahia" = "BA",
-        "Ceará" = "CE",
+        "Ceara" = "CE",
         "Distrito Federal" = "DF",
         "Espirito Santo" = "ES",
-        "Goiás" = "GO",
-        "Maranhão" = "MA",
+        "Goias" = "GO",
+        "Maranhao" = "MA",
         "Mato Grosso" = "MT",
         "Mato Grosso do Sul" = "MS",
         "Minas Gerais" = "MG",
-        "Pará" = "PA",
-        "Paraíba" = "PB",
-        "Paraná" = "PR",
+        "Para" = "PA",
+        "Paraiba" = "PB",
+        "Parana" = "PR",
         "Pernambuco" = "PE",
-        "Piauí" = "PI",
+        "Piaua" = "PI",
         "Rio de Janeiro" = "RJ",
         "Rio Grande do Norte" = "RN",
         "Rio Grande do Sul" = "RS",
-        "Rondônia" = "RO",
-        "Rorâima" = "RR",
+        "Rondonia" = "RO",
+        "Roraima" = "RR",
         "Santa Catarina" = "SC",
-        "São Paulo" = "SP",
+        "Sao Paulo" = "SP",
         "Sergipe" = "SE"
       )
     ),
-    selectInput("dias",
-                "Dias",
-                choices <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)),
+    
+    hr(),
+    selectInput(
+      "dias",
+      "Media dos ultimos dias ?",
+      choices <- c(0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)
+    ),
+    
+    hr(),
+    
+    dateInput(
+      "date",
+      label = h3("Data: "),
+      value = as.Date("2018-03-19"),
+      min = as.Date("2018-03-19"),
+      max = as.Date("2018-03-29")
+    ),
+    
+    hr(),
+    
     selectInput(
       "tipo_previsao",
       "Dados",
@@ -54,13 +71,15 @@ shinyUI(pageWithSidebar(
     )
   ),
   
-  
   mainPanel(tabsetPanel(
-    tabPanel('Gráficos',
-             dataTableOutput('PREC')),
+    
     tabPanel(
-      'Mapa Meteorológico',
-      leafletOutput('mapa', width = "100%", height = "450")
+      'Mapa Meteorologico',
+      leafletOutput('mapa', width = "100%", height = "750")
+    ),
+    
+    tabPanel('Graficos',
+             dataTableOutput('PREC')
     )
   ))
 ))
