@@ -13,10 +13,9 @@ loadRData <- function(fileName) {
 
 shinyServer(function(input, output) {
   output$mapa <- renderLeaflet({
-    
-    tipoCarga = 'date'    
+    tipoCarga = 'date'
     file = paste(pathFile, input$tipo_previsao, '.Rda', sep = "")
-
+    
     if (input$dias == '0') {
       intervalo <- switch (
         input$date,
@@ -37,18 +36,29 @@ shinyServer(function(input, output) {
       intervalo <-
         switch (
           input$dias,
-          "1" = c(3:26),   #carrega o dia 19
-          "2" = c(3:50),   # carrega o dia 19-20
-          "3" = c(3:74),   # carrega o dia 19-21
-          "4" = c(3:98),   # carrega o dia 19-22
-          "5" = c(3:122),  # carrega o dia 19-23
-          "6" = c(3:146),  # carrega o dia 19-24
-          "7" = c(3:170),  # carrega o dia 19-25
-          "8" = c(3:194),  # carrega o dia 19-26
-          "9" = c(3:218),  # carrega o dia 19-27
-          "10" = c(3:242), # carrega o dia 19-28
-          "11" = c(3:266)) # carrega o dia 19-29
-        tipoCarga = 'dias'
+          "1" = c(3:26),
+          #carrega o dia 19
+          "2" = c(3:50),
+          # carrega o dia 19-20
+          "3" = c(3:74),
+          # carrega o dia 19-21
+          "4" = c(3:98),
+          # carrega o dia 19-22
+          "5" = c(3:122),
+          # carrega o dia 19-23
+          "6" = c(3:146),
+          # carrega o dia 19-24
+          "7" = c(3:170),
+          # carrega o dia 19-25
+          "8" = c(3:194),
+          # carrega o dia 19-26
+          "9" = c(3:218),
+          # carrega o dia 19-27
+          "10" = c(3:242),
+          # carrega o dia 19-28
+          "11" = c(3:266)
+        ) # carrega o dia 19-29
+      tipoCarga = 'dias'
     }
     weatherData <- loadRData(file)
     
@@ -59,7 +69,7 @@ shinyServer(function(input, output) {
     if (input$estado == "BR")
       shape_estado <- shape_br
     else
-      shape_estado <- shape_br[shape_br$sigla %in% input$estado, ]
+      shape_estado <- shape_br[shape_br$sigla %in% input$estado,]
     
     #Fazer a media pela quantidade de dias selecionados
     media <- rowSums(weatherData[, intervalo]) / (length(intervalo))
@@ -69,7 +79,7 @@ shinyServer(function(input, output) {
                  weatherData$LATITUDE,
                  media)
     
-    if(tipoCarga == 'dias')
+    if (tipoCarga == 'dias')
       colnames(pontos) = c("LONGITUDE", "LATITUDE", c(3:intervalo))
     else
       colnames(pontos) = c("LONGITUDE", "LATITUDE", c(intervalo))
@@ -77,7 +87,7 @@ shinyServer(function(input, output) {
     sp::coordinates(pontos) <- c("LONGITUDE", "LATITUDE")
     sp::proj4string(pontos) <- sp::proj4string(shape_estado)
     new_pontos <-
-      weatherData[!is.na(sp::over(pontos, as(shape_estado, "SpatialPolygons"))), ]
+      weatherData[!is.na(sp::over(pontos, as(shape_estado, "SpatialPolygons"))),]
     
     tab_raster = raster::rasterFromXYZ(new_pontos)
     r <-
@@ -120,7 +130,20 @@ shinyServer(function(input, output) {
   })
   
   output$grafico <- renderPlot({
-    
-    
+    D1 <-
+      c(
+        sum(TP2M[, c(3:26)]) / (length(TP2M[, 3]) * 24),
+        sum(TP2M[, c(27:50)]) / (length(TP2M[, 3]) * 24),
+        sum(TP2M[, c(51:74)]) / (length(TP2M[, 3]) * 24),
+        sum(TP2M[, c(75:98)]) / (length(TP2M[, 3]) * 24),
+        sum(TP2M[, c(99:122)]) / (length(TP2M[, 3]) * 24),
+        sum(TP2M[, c(123:146)]) / (length(TP2M[, 3]) * 24),
+        sum(TP2M[, c(147:170)]) / (length(TP2M[, 3]) * 24),
+        sum(TP2M[, c(171:194)]) / (length(TP2M[, 3]) * 24),
+        sum(TP2M[, c(195:218)]) / (length(TP2M[, 3]) * 24),
+        sum(TP2M[, c(219:242)]) / (length(TP2M[, 3]) * 24),
+        sum(TP2M[, c(243:266)]) / (length(TP2M[, 3]) * 24)
+      )
+    barplot(D1)
   })
 })
