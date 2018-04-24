@@ -7,7 +7,7 @@ shinyUI(pageWithSidebar(
   sidebarPanel(
     selectInput(
       "estado",
-      "Estado",
+      h3("Estado"),
       choices <- c(
         "Brasil" = "BR",
         "Acre" = "AC",
@@ -40,13 +40,6 @@ shinyUI(pageWithSidebar(
     ),
     
     hr(),
-    selectInput(
-      "dias",
-      "Media dos ultimos dias ?",
-      choices <- c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)
-    ),
-    
-    hr(),
     
     dateInput(
       "date",
@@ -60,7 +53,7 @@ shinyUI(pageWithSidebar(
     
     selectInput(
       "tipo_previsao",
-      "Dados",
+      h3("Dados"),
       c(
         `Temperatura` = "TP2M",
         `Radiacao Solar` = "OCIS",
@@ -72,13 +65,14 @@ shinyUI(pageWithSidebar(
   ),
   
   mainPanel(tabsetPanel(
+    
     tabPanel(
       'Mapa Meteorologico',
-      leafletOutput('mapa', width = "100%", height = "750")
+      leafletOutput('mapa', width = "100%", height = "500")
     ),
     
     tabPanel(
-      'Graficos',
-      plotOutput('grafico',width = "100%", height = "750"))
+      'Grafico Temperatura',
+      plotOutput('graficoTemp',width = "100%", height = "500"))
   ))
 ))
