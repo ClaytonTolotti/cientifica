@@ -106,6 +106,10 @@ shinyServer(function(input, output) {
   })
   
   output$graficoTemp <- renderPlot({
+    
+    file = paste(pathFile, 'TP2M.Rda', sep = "")
+    TP2M <- loadRData(file)
+    
     D1 <-
       c(
         '2018-03-19' = sum(TP2M[, c(3:26)]) / (length(TP2M[, 3]) * 24),
